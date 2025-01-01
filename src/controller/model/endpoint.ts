@@ -942,6 +942,19 @@ class Endpoint extends Entity {
             optionsWithDefaults.reservedBits,
         );
 
+        // set colors as low priority/timeout
+        let testPayload = logPayload ? logPayload : payload;
+        if ((testPayload.hasOwnProperty('colorx') && testPayload.hasOwnProperty('colory') ) ||
+            (testPayload.hasOwnProperty('enhancehue') && testPayload.hasOwnProperty('saturation') ))
+        {
+	        optionsWithDefaults.timeout = 61;
+        }
+        // set brightness bit higher priority
+        else if (testPayload.hasOwnProperty('level'))
+        {
+            optionsWithDefaults.timeout = 81;
+        }
+
         const createLogMessage = (): string =>
             `ZCL command ${this.deviceIeeeAddress}/${this.ID} ` +
             `${cluster.name}.${command.name}(${JSON.stringify(logPayload ? logPayload : payload)}, ${JSON.stringify(optionsWithDefaults)})`;

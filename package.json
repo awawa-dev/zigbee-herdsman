@@ -4,7 +4,7 @@
         "email": "koenkanters94@gmail.com"
     },
     "bugs": {
-        "url": "https://github.com/koenkk/zigbee-herdsman/issues"
+        "url": "https://github.com/awawa-dev/zigbee-herdsman/issues"
     },
     "contributors": [
         {
@@ -22,6 +22,9 @@
         {
             "name": "Jack Wu",
             "email": "jackchased@gmail.com"
+        },
+        {
+            "name": "Awawa"
         }
     ],
     "dependencies": {
@@ -64,7 +67,7 @@
         "typescript": "^5.6.3",
         "typescript-eslint": "^8.13.0"
     },
-    "homepage": "https://github.com/Koenkk/zigbee-herdsman",
+    "homepage": "https://github.com/awawa-dev/zigbee-herdsman",
     "keywords": [
         "zigbee",
         "zstack",
@@ -78,9 +81,10 @@
     "name": "zigbee-herdsman",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Koenkk/zigbee-herdsman.git"
+        "url": "git+https://github.com/awawa-dev/zigbee-herdsman.git"
     },
     "scripts": {
+        "prepare": "tsc",
         "build": "tsc",
         "build:watch": "tsc -w",
         "test": "jest test --silent --maxWorkers=50%",
@@ -93,7 +97,7 @@
         "clean": "rimraf temp coverage dist",
         "prepack": "pnpm run clean && pnpm run build"
     },
-    "version": "2.1.9",
+    "version": "2.1.10",
     "jest": {
         "coverageThreshold": {
             "global": {

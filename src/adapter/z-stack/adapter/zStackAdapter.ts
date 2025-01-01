@@ -456,9 +456,15 @@ class ZStackAdapter extends Adapter {
     ): Promise<Events.ZclPayload | void> {
         logger.debug(
             `sendZclFrameToEndpointInternal ${ieeeAddr}:${networkAddress}/${endpoint} ` +
-                `(${responseAttempt},${dataRequestAttempt},${this.queue.count()})`,
+                `(${responseAttempt},${dataRequestAttempt},${this.queue.count()},${this.queue.countDevice(networkAddress)})`,
             NS,
         );
+
+        if (timeout == 61 && this.queue.countDevice(networkAddress) > 1) {
+            logger.debug(`sendZclFrameToEndpointInternal queue is full. Skipping color update.`, NS,);
+            throw new Error(`sendZclFrameToEndpointInternal queue is full. Skipping color update.`);
+        }
+
         let response = null;
         const command = zclFrame.command;
         if (command.response != undefined && disableResponse === false) {
@@ -538,6 +544,7 @@ class ZStackAdapter extends Adapter {
                  * MAC_NO_RESOURCES: Operation could not be completed because no memory resources are available,
                  * wait some time and retry.
                  */
+                logger.debug(`sendZclFrameToEndpointInternal network overload. Cooldown...`, NS,);
                 await Wait(2000);
                 return await this.sendZclFrameToEndpointInternal(
                     ieeeAddr,

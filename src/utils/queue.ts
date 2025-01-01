@@ -72,6 +72,14 @@ class Queue {
     public count(): number {
         return this.jobs.length;
     }
+
+    public countDevice(key?: string | number): number {
+        let jobNumber = 0;
+
+        this.jobs.forEach((element) => {if (key && element.key === key) jobNumber++;});
+
+        return jobNumber;
+    }
 }
 
 export default Queue;
