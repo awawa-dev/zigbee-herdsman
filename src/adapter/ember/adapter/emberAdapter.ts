@@ -2044,6 +2044,16 @@ export class EmberAdapter extends Adapter {
         const command = zclFrame.command;
         let commandResponseId: number | undefined;
 
+        logger.debug(
+            `sendZclFrameToEndpoint ${ieeeAddr}:${networkAddress}/${endpoint} ` +
+                `(${this.queue.count()},${this.queue.countDevice(networkAddress)})`, NS,
+        );
+
+        if (timeout == 61 && this.queue.countDevice(networkAddress) > 1) {
+            logger.debug(`sendZclFrameToEndpointInternal queue is full. Skipping color update.`, NS,);
+            throw new Error(`~x~>[sendZclFrameToEndpointInternal queue is full. Skipping color update]`);
+        }
+
         if (command.response !== undefined && disableResponse === false) {
             commandResponseId = command.response;
         } else if (!zclFrame.header.frameControl.disableDefaultResponse) {

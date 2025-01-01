@@ -18,6 +18,5 @@ tsconfig.tsbuildinfo
 .idea
 
 #src
-src
 docs
 temp
