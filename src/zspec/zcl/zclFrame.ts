@@ -19,11 +19,14 @@ const ListTypes: number[] = [
     BuffaloZclDataType.LIST_ZONEINFO,
 ];
 
+export type ColorStreamType = 'color' | 'brightness';
+
 export class ZclFrame {
     public readonly header: ZclHeader;
     public readonly payload: ZclPayload;
     public readonly cluster: Cluster;
     public readonly command: Command;
+    public colorStreamType?: ColorStreamType = undefined;
 
     private constructor(header: ZclHeader, payload: ZclPayload, cluster: Cluster, command: Command) {
         this.header = header;
